@@ -1,0 +1,81 @@
+<br />
+<br />
+<section>
+  <div class="container mt-5">
+    <div class="row mb-4">
+      <div class="col-xs-12 col-sm-8 col-md-10">
+        <h2>Lista de Facturas</h2>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-2">
+        <button
+          type="button"
+          class="btn btn-primary float-right ml-3 btn-block"
+          data-toggle="modal"
+          data-target="#modalFactura"
+        >
+          + Agregar
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-hover text-center">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tipo de Factura</th>
+              <th scope="col">Precio Total</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Numero de Factura</th>
+              <th scope="col">Forma de Pago</th>
+
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- implementar trackBy -->
+            <tr
+              *ngFor="
+                let i of facturas
+                  | paginate: { itemsPerPage: 5, currentPage: pageActual }
+              "
+            >
+              <th scope="row">{{ i.id }}</th>
+              <td>{{ i.tipoFactura }}</td>
+              <td>{{ i.precioTotal | currency }}</td>
+              <td>{{ i.fecha }}</td>
+              <td>{{ i.nroFactura }}</td>
+              <td>{{ i.formaPago }}</td>
+
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-primary float-right"
+                  data-toggle="modal"
+                  data-target="#modalDetalle"
+                  (click)="onDetails(i)"
+                >
+                  Ver Detalle
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="delete(i)"
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls
+          (pageChange)="pageActual = $event"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-detalle-factura [facturaDetalle]="facturaDetalle"></app-detalle-factura>
+<app-form-factura [facturaEditar]="facturaActual"></app-form-factura>

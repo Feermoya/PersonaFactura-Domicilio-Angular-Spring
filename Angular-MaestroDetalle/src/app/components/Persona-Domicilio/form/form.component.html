@@ -1,0 +1,105 @@
+<div class="modal" id="modalPersona" data-backdrop="static" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{edit ? 'Actualizar persona' : 'Agregar persona'}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="formPersona" [formGroup]="formPersona" (ngSubmit)="onSave(formPersona)">
+          <input type="hidden" name="id" id="id" formControlName="id">
+
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" formControlName="nombre">
+            <div class="alert-danger" *ngIf="formPersona.controls['nombre'].errors?.required">
+              *campo es requerido
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="apellido">Apellido:</label>
+            <input type="text" class="form-control" name="apellido" id="apellido" formControlName="apellido">
+            <div class="alert-danger" *ngIf="formPersona.controls['apellido'].errors?.required">
+              *campo es requerido
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Telefono:</label>
+            <input type="number" class="form-control" name="telefono" id="telefono" formControlName="telefono">
+            <div class="alert-danger" *ngIf="formPersona.get('telefono').hasError('required')">
+              *campo es requerido
+            </div>
+          </div>
+
+          <div formGroupName="domicilio">
+
+            <div class="form-group">
+              <label for="calle">Calle:</label>
+              <input type="text" class="form-control" name="calle" id="calle" formControlName="calle">
+              <div class="alert-danger" *ngIf="formPersona.get('domicilio.calle').hasError('required')">
+                *campo es requerido
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="numero">Numero:</label>
+              <input type="text" class="form-control" name="numero" id="numero" formControlName="numero">
+              <div class="alert-danger" *ngIf="formPersona.get('domicilio.numero').hasError('required')">
+                *campo es requerido
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="piso">Piso:</label>
+              <input type="text" class="form-control" name="piso" id="piso" formControlName="piso">
+              <div class="alert-danger" *ngIf="formPersona.get('domicilio.piso').hasError('required')">
+                *campo es requerido
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <label for="nroDepartamento">NumDepartamento:</label>
+              <input type="text" class="form-control" name="nroDepartamento" id="nroDepartamento"
+                formControlName="nroDepartamento">
+              <div class="alert-danger" *ngIf="formPersona.get('domicilio.nroDepartamento').hasError('required')">
+                *campo es requerido
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="aclaracion">Aclaracion:</label>
+              <input type="text" class="form-control" name="aclaracion" id="aclaracion" formControlName="aclaracion">
+              <div class="alert-danger" *ngIf="formPersona.get('domicilio.aclaracion').hasError('required')">
+                *campo es requerido
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="!formPersona.valid">
+            <p class="alertFont">¡Debes completar todos los campos!</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="onCloseAlert()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" #btnClose
+              (click)="onClose()">Cerrar</button>
+            <button type="submit " class="btn btn-primary " *ngIf="formPersona.valid">Guardar persona</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

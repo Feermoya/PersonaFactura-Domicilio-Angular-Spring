@@ -1,0 +1,112 @@
+<div class="modal" id="modalFactura" data-backdrop="static" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{edit ? 'Actualizar factura' : 'Agregar factura'}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form name="formFactura" [formGroup]="formFactura" (ngSubmit)="onSave(formFactura)">
+          <input type="hidden" name="id" id="id" formControlName="id">
+
+          <div class="form-group">
+            <label for="tipoFactura">Tipo de Factura:</label>
+
+            <select class="custom-select" formControlName="tipoFactura">
+
+              <option value="A">A</option>
+              <option value="B">B</option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <input type="hidden" class="form-control" value={{nroFactura}} name="nroFactura" id="nroFactura"
+              formControlName="nroFactura">
+          </div>
+
+          <div class="form-group">
+            <label for="formaPago"> Seleccione forma de Pago:</label>
+
+            <select class="custom-select" formControlName="formaPago">
+
+              <option value="Efectivo">Efectivo</option>
+              <option value="Tarjeta">Tarjeta</option>
+
+            </select>
+          </div>
+
+          <div class="form-group">
+            <!-- <label  for="precioTotal">Total: {{formFactura.controls.precioTotal.value}}</label> -->
+            <input type="hidden" class="form-control" name="precioTotal" id="precioTotal" value={{total}}
+              formControlName="precioTotal">
+
+          </div>
+
+          <div class="form-group">
+            <a class="btn btn-success" (click)="agregarDetalleFactura()">Agregar Articulo</a>
+          </div>
+
+          <div class="" formArrayName="detalleFactura" *ngFor="let detalle of detalleFactura.controls; let i = index ">
+            <div [formGroupName]="i">
+              <div class="form-group ">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" class="form-control" name="cantidad" id="cantidad" formControlName="cantidad">
+
+              </div>
+
+              <div class="form-group">
+                <label for="formaPago"> Seleccione Plato:</label>
+
+                <select class="custom-select" formControlName="nombreArticulo">
+
+                  <option value="Pizza">Pizza</option>
+                  <option value="Hamburguesa">Hamburguesa</option>
+                  <option value="Lomo">Lomo</option>
+                </select>
+              </div>
+
+
+              <div class="form-group">
+                <label for="precioUnitario">Seleccione el Tamaño:</label>
+                <!-- <input type="number" class="form-control" name="precioUnitario" id="precioUnitario" > -->
+                <select class="custom-select" formControlName="precioUnitario">
+
+                  <option value="250">Chico</option>
+                  <option value="350">Mediano</option>
+                  <option value="400">Grande</option>
+                </select>
+              </div>
+
+
+              <div class="form-group">
+                <button class="btn btn-danger" (click)="removerDetalle(i)"> Eliminar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="!formFactura.valid">
+            <p class="alertFont">¡Debes completar todos los campos!</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="onCloseAlert()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" #btnClose
+              (click)="onClose()">Cerrar</button>
+            <button type="submit " class="btn btn-primary" *ngIf="formFactura.valid">Guardar factura</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
